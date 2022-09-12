@@ -1,5 +1,5 @@
 import {Component} from "react";
-import Buttons from "../Buttons/Buttons";
+
 
 class FeedbackCounter extends Component{
     state = {
