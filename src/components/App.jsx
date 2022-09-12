@@ -1,16 +1,15 @@
+
+import FeedbackCounter from "./Feedback/FeedbackCounter/FeedbackCounter";
+import Buttons from "../components/Feedback/Buttons/Buttons";
+import Statistics from "../components/Feedback/Statistics/Statistics";
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div>
+   <FeedbackCounter>
+      <Buttons/>
+      <Statistics/>
+   </FeedbackCounter>
     </div>
   );
 };
