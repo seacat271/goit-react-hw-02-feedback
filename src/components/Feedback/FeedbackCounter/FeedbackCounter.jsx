@@ -1,80 +1,59 @@
-import {Component} from "react";
+import { Component } from 'react';
+import Statistics from '../Statistics/Statistics';
+import FeedbackOptions from "../FeedbackOptions/FeedbackOptions";
+import Section from "../Section/Section";
+import Notification from "../Notification/Notification"
+
+class FeedbackCounter extends Component {
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+  
+  feedbackIncrement = (stateKind) => {
+    this.setState(prevState => {
+      return {
+       [stateKind]: prevState[stateKind] + 1,
+      };
+    });
+  };
 
 
-class FeedbackCounter extends Component{
-    state = {
-        good: 0,
-        neutral: 0,
-        bad: 0
-      }
+  countTotalFeedback = () => {
+    return Object.values(this.state).reduce((acc, item) => acc + item, 0);
+  };
 
-    feedbackGoodIncrement = () => {
-       this.setState((prevState) => {
-        return {
-           good: prevState.good + 1,
-        }
-       })
-    }
+  countPositiveFeedbackPercentage = () => {
+    return (
+      Math.round((this.state.good * 100) / this.countTotalFeedback()) + '%'
+    );
+  };
 
-    feedbackNeutralIncrement = () => {
-        this.setState((prevState) => {
-            return {
-              neutral: prevState.neutral + 1,
-            }
-           })
-    }
-
-    feedbackBadIncrement = () => {
-        this.setState((prevState) => {
-            return {
-              bad: prevState.bad + 1,
-            }
-           })
-    }
-
-    countTotalFeedback = () => {
-        return Object.values(this.state).reduce((acc, item) => acc + item, 0)
-    }
-
-    countPositiveFeedbackPercentage = () => {
-        return (Math.round(this.state.good * 100 / this.countTotalFeedback()) + "%")
-    }
-
-    render() { 
-        return (<>
-            <h1>Please leave feedback</h1>
-            <div>
-        <button type="button" onClick={
-            () => {
-                this.feedbackGoodIncrement()
-            }
-        }>Good</button>
-
-        <button type="button"
-        onClick={
-            () => {
-                this.feedbackNeutralIncrement()
-            }
-        }>Neutral</button>
-
-        <button type="button"
-        onClick={
-            () => {
-                this.feedbackBadIncrement()
-            }
-        }>Bad</button>
-    </div>
-    <div>
-            <h2>Statistic</h2>
-            <p>Good: <span>{this.state.good}</span></p>
-            <p>Neutral: <span>{this.state.neutral}</span></p>
-            <p>Bad: <span>{this.state.bad}</span></p>
-            <p>Total:<span>{this.countTotalFeedback()}</span></p>
-            <p>Positive feedback:<span>{this.countPositiveFeedbackPercentage()}</span></p>
-        </div>
-            </>
-        )
-    }
+  render() {
+    return (
+      <>
+    <Section title = "Please leave feedback" >
+        <FeedbackOptions
+            onLeaveFeedback = {this.feedbackIncrement}
+            options = {Object.keys(this.state)}
+        />
+    </Section>
+        <Section title = "Statistic" >
+            {this.countTotalFeedback() === 0
+            ? <Notification
+            message="There is no feedback"/>
+            : <Statistics 
+            good={this.state.good} 
+            neutral={this.state.neutral}
+            bad = {this.state.bad}
+            total={this.countTotalFeedback()}
+            positivePercentage = {this.countPositiveFeedbackPercentage()}
+            />}
+        </Section>
+      </>
+    );
+  }
 }
 
 
