@@ -19,7 +19,6 @@ class FeedbackCounter extends Component {
     });
   };
 
-
   countTotalFeedback = () => {
     return Object.values(this.state).reduce((acc, item) => acc + item, 0);
   };
