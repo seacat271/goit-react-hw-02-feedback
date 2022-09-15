@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
+import { BoxKind, BoxTotal, Chip} from './Statistics.styled';
 const Statistics = (props) => {
     const {good, neutral, bad, total, positivePercentage} = props;
     return (
     <div>
-        <p>Good: <span>{good}</span></p>
-        <p>Neutral: <span>{neutral}</span></p>
-        <p>Bad: <span>{bad}</span></p>
-        <p>Total:<span>{total}</span></p>
-        <p>Positive feedback:<span>{positivePercentage}</span></p>
+        <BoxKind value={"good"}>Good: <Chip>{good}</Chip></BoxKind>
+        <BoxKind value={"neutral"}>Neutral: <Chip>{neutral}</Chip></BoxKind>
+        <BoxKind value={"bad"}>Bad: <Chip>{bad}</Chip></BoxKind>
+        <BoxTotal>Total:<Chip>{total}</Chip></BoxTotal>
+        <BoxTotal>Positive feedback:<Chip>{positivePercentage}</Chip></BoxTotal>
     </div>
     )
 }
@@ -20,4 +21,5 @@ Statistics.propTypes = {
     bad: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
     positivePercentage: PropTypes.string.isRequired,
+    value: PropTypes.string,
 }
